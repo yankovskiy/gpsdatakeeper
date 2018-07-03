@@ -32,7 +32,7 @@ CREATE TABLE `gpsdata` (
   `title` varchar(64) NOT NULL,
   `data` text NOT NULL,
   `zoom` int(11) NOT NULL,
-  `center` varchar(32) NOT NULL,
+  `center` varchar(64) NOT NULL,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
