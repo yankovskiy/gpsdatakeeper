@@ -4,5 +4,5 @@ return [
     'robotEmail' => 'robot@gpsdatakeeper.com',
     'supportEmail' => 'support@gpsdatakeeper.com',
     'user.passwordResetTokenExpire' => 3600,
-    'version' => '0.1.1',
+    'version' => '0.1.2',
 ];
