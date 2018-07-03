@@ -1,0 +1,11 @@
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+    padding: 10px;
+    text-align: center;
+    height: auto;
+}
+
+.alert-success-old {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
