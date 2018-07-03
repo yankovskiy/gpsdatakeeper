@@ -35,6 +35,7 @@ $this->title = 'My GPS data'; ?>
                 'delete' => function ($url, $model, $key) {
                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
                         'title' => Yii::t('yii', 'Delete'),
+                        'data-method' => 'post',
                         'data-pjax' => '#grid-pjax',
                         'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                     ]);
