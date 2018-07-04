@@ -19,7 +19,7 @@
 
  - improve UI/UX;
  - downalod GPS data from user profile;
- - my location button;
+ - ~~my location button;~~
  - google maps;
  - thunderforest maps;
  - upload gpx;

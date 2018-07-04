@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aed5c1c569119a7b7fc37f45655e1cdd",
+    "content-hash": "096995cc0c7229cfccdffa4a1b027d1a",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -147,6 +147,25 @@
             },
             "require": {
                 "bower-asset/leaflet": ">=0.7.0"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/leaflet.locatecontrol",
+            "version": "v0.62.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/domoritz/leaflet-locatecontrol.git",
+                "reference": "c21238378c277e20fedb2ac39b87cf47450db3d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/domoritz/leaflet-locatecontrol/zipball/c21238378c277e20fedb2ac39b87cf47450db3d4",
+                "reference": "c21238378c277e20fedb2ac39b87cf47450db3d4",
+                "shasum": null
             },
             "type": "bower-asset",
             "license": [

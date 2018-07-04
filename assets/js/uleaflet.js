@@ -221,8 +221,9 @@ function u_init(options) {
 
     }
 
-
     L.control.sidebar('sidebar').addTo(map);
+
+    L.control.locate({position: 'topright', icon: 'glyphicon glyphicon-globe', iconLoading: 'glyphicon glyphicon-refresh'}).addTo(map);
 
     // handle #download-kml click
     handleDownload('kml');
