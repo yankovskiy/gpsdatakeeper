@@ -9,8 +9,12 @@
  5. Install depends packages via composer. Run `composer install` in your shell.
  6. Configure your web server and mysql.
  7. Import into your mysql sql/init.sql.
- 8. Update db to latest version `./yii migrate`.
- 9. If you are want use feature "auto delete oldest data" add into your crontab `0 * * * * /var/www/map/yii cron/remove-old-data`
+ 8. If you are want use feature "auto delete oldest data" add into your crontab `0 * * * * /var/www/map/yii cron/remove-old-data`
+ 
+## Upgrade
+ 1. Update code by run `git pull`.
+ 2. Update dependencies by run `composer install`.
+ 3. Update database by run `./yii migrate`.
 
 ## Roadmap
 
