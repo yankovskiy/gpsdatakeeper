@@ -53,7 +53,7 @@ class GpsDataSearch extends GpsData
      */
     public function search($params)
     {
-        $query = self::find()->where(['user_id' => Yii::$app->user->id]);
+        $query = self::find()->select(['token', 'title', 'created_at', 'updated_at'])->where(['user_id' => Yii::$app->user->id]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
