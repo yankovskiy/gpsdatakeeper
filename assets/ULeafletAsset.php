@@ -21,6 +21,7 @@ class ULeafletAsset extends AssetBundle
         'js/tokml.min.js',
         'js/togpx.min.js',
         'js/uleaflet.min.js',
+        'js/togeojson.js',
     ];
 
     public $css = [

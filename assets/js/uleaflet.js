@@ -69,6 +69,75 @@ function saveToServerClickListener() {
 }
 
 /**
+ * Sets onchange listener for "open file" input
+ * Opens dialog for choose file and draw it on the map
+ */
+function openFileChangeListener() {
+    /**
+     * Handles GPS-data files for draws it on the maps
+     * @param input
+     */
+    function handleFileSelect(input) {
+        /**
+         * Gets file extension
+         * @param {File} file
+         * @returns {string} file extension
+         */
+        function getFileExtension(file) {
+            const parts = file.name.split('.');
+            const length = parts.length;
+            return parts[length - 1].toLowerCase();
+        }
+
+        /**
+         * Checks file extension for valid
+         * @param {string} ext
+         * @returns {boolean} true for GPX or KML extension
+         */
+        function isValidExt(ext) {
+            return ext === 'gpx' || ext === 'kml';
+        }
+
+        /**
+         * Displays data on the map
+         * @param {GeoJSON} geoJson
+         */
+        function displayOnMap(geoJson) {
+            var layer = L.geoJSON(geoJson);
+            layer.eachLayer(
+                function (layer) {
+                    drawnItems.addLayer(layer);
+                }
+            );
+        }
+
+        const file = input.files[0];
+        const fileExtension = getFileExtension(file);
+        const reader = new FileReader();
+
+        if (!isValidExt(fileExtension)) {
+            alert('Incorrect file extension');
+            return;
+        }
+
+        reader.onload = function (event) {
+            const parser = new DOMParser();
+            const data = parser.parseFromString(event.target.result, 'text/xml');
+            const geoJson = fileExtension === 'gpx' ? toGeoJSON.gpx(data) : toGeoJSON.kml(data);
+
+            console.log(geoJson);
+            displayOnMap(geoJson);
+        };
+
+        reader.readAsText(file);
+    }
+
+    $('#open-file').change(function () {
+        handleFileSelect(this);
+    });
+}
+
+/**
  * Inits map and control elements
  * @param {Object} options for init map
  * @see defaultInitOptions
@@ -78,12 +147,12 @@ function u_init(options) {
     const osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     const osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
     const localOptions = {
-        mapCenter: options.mapCenter !== undefined? options.mapCenter : defaultInitOptions.mapCenter,
-        mapZoom: options.mapZoom !== undefined? options.mapZoom : defaultInitOptions.mapZoom,
+        mapCenter: options.mapCenter !== undefined ? options.mapCenter : defaultInitOptions.mapCenter,
+        mapZoom: options.mapZoom !== undefined ? options.mapZoom : defaultInitOptions.mapZoom,
         geoData: options.geoData,
         isOwner: options.isOwner,
         isGuest: options.isGuest,
-        gpsDataTitle: options.gpsDataTitle !== undefined? options.gpsDataTitle : defaultInitOptions.gpsDataTitle,
+        gpsDataTitle: options.gpsDataTitle !== undefined ? options.gpsDataTitle : defaultInitOptions.gpsDataTitle,
         gpsDataToken: options.gpsDataToken,
     };
 
@@ -223,7 +292,11 @@ function u_init(options) {
 
     L.control.sidebar('sidebar').addTo(map);
 
-    L.control.locate({position: 'topright', icon: 'glyphicon glyphicon-globe', iconLoading: 'glyphicon glyphicon-refresh'}).addTo(map);
+    L.control.locate({
+        position: 'topright',
+        icon: 'glyphicon glyphicon-globe',
+        iconLoading: 'glyphicon glyphicon-refresh'
+    }).addTo(map);
 
     // handle #download-kml click
     handleDownload('kml');
@@ -233,6 +306,8 @@ function u_init(options) {
     saveToServerClickListener();
     //
     handleSaveDataModal();
+    //
+    openFileChangeListener();
 }
 
 /**
@@ -255,7 +330,7 @@ function hideSaveDataLink() {
  */
 function handleSaveDataModal() {
     $('#save-button').click(function () {
-       const title = $('#gps-data-title').val();
+        const title = $('#gps-data-title').val();
 
         /**
          * Displays error message about gps-data title was empty
@@ -297,7 +372,9 @@ function handleSaveDataModal() {
         function uploadDataToServer() {
             const center = map.getCenter();
             const zoom = map.getZoom();
-            const geoData = getGeoData();
+            const geoData = JSON.stringify(getGeoData());
+
+            console.log('geo = ' + geoData);
 
             $.post('/map/save-data', {
                 data: geoData,
@@ -328,15 +405,15 @@ function handleSaveDataModal() {
         if (title !== null && title.trim().length > 0) {
             gpsDataTitle = title;
             displayTransferInfo();
-           uploadDataToServer();
-       } else {
-           displayEmptyTitleError();
-       }
+            uploadDataToServer();
+        } else {
+            displayEmptyTitleError();
+        }
     });
 
     $('#save-data-modal').on('show.bs.modal', function (e) {
         $('#gps-data-title').val(gpsDataTitle);
-        $('#default-form').show().removeClass('has-error');;
+        $('#default-form').show().removeClass('has-error');
         $('#save-button').show();
         $('#save-success').hide();
         $('#save-progress').hide();
@@ -371,6 +448,7 @@ function handleDownload(format) {
             return;
         }
 
+        console.log(JSON.stringify(data));
         if (format === 'kml') {
             data = tokml(data);
         } else if (format === 'gpx') {

@@ -101,10 +101,7 @@ class MapController extends \yii\web\Controller
             $gpsData = new GpsData();
         }
 
-        $data = Json::encode(
-            Yii::$app->request->post('data'),
-            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK
-        );
+        $data = Yii::$app->request->post('data');
         $center = Json::encode(
             Yii::$app->request->post('center'),
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK

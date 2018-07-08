@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 -- Database: `gpskeeper`
 --
 
+--
+-- Table structure for table `migration`
+--
+
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `migration`
+--
+
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1531051327),
+('m180708_115845_change_data_column', 1531051329);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `migration`
+--
+ALTER TABLE `migration`
+  ADD PRIMARY KEY (`version`);
+
 -- --------------------------------------------------------
 
 --
@@ -30,7 +57,7 @@ CREATE TABLE `gpsdata` (
   `token` varchar(32) NOT NULL,
   `user_id` int(11) NOT NULL,
   `title` varchar(64) NOT NULL,
-  `data` text NOT NULL,
+  `data` mediumtext NOT NULL,
   `zoom` int(11) NOT NULL,
   `center` varchar(64) NOT NULL,
   `created_at` int(11) NOT NULL,

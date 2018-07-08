@@ -51,6 +51,14 @@ $this->title = Yii::$app->name;
                 </small>
             </p>
 
+            <p>
+                <label for="open-file" class="sidebar-pane-label">Open file</label><br>
+                <input type="file" accept=".gpx,.kml" id="open-file" name="file" class="sidebar-pane-file">
+                <small>
+                    Open your gps-data for view on the map. Supported GPX and KML formats.
+                </small>
+            </p>
+
             <p class="save-block">
                 <a href="#" id="save-to-server">Save to server</a><br>
                 <small>

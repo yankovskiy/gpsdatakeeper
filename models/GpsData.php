@@ -115,10 +115,12 @@ class GpsData extends \yii\db\ActiveRecord
                     } else if ($geometry['type'] == 'Point') {
                         if (!isset($geometry['coordinates'])
                             || !is_array($geometry['coordinates'])
-                            || count($geometry['coordinates']) != 2) {
+                            || count($geometry['coordinates']) > 3 || count($geometry['coordinates']) < 2) {
                             $hasError = true;
                         } else if (!is_float($geometry['coordinates'][0])
                             || !is_float($geometry['coordinates'][1])) {
+                            $hasError = true;
+                        } else if (count($geometry['coordinates']) == 3 && !is_numeric($geometry['coordinates'][2])) {
                             $hasError = true;
                         }
                     } else if ($geometry['type'] == 'LineString') {
@@ -128,11 +130,14 @@ class GpsData extends \yii\db\ActiveRecord
                             $hasError = true;
                         } else {
                             foreach ($geometry['coordinates'] as $coordinates) {
-                                if (!is_array($coordinates) || count($coordinates) != 2) {
+                                if (!is_array($coordinates) || count($coordinates) > 3 || count($coordinates) < 2) {
                                     $hasError = true;
                                     break;
                                 } else if (!is_float($coordinates[0])
                                     || !is_float($coordinates[1])) {
+                                    $hasError = true;
+                                    break;
+                                } else if (count($coordinates) == 3 && !is_numeric($coordinates[2])) {
                                     $hasError = true;
                                     break;
                                 }

@@ -94,7 +94,7 @@
     right: 40px; }
   .sidebar.collapsed > .sidebar-content {
     overflow-y: hidden; }
-
+  
 .sidebar-pane {
   display: none;
   left: 0;
@@ -112,6 +112,24 @@
   @media (min-width: 1200px) {
     .sidebar-pane {
       min-width: 420px; } }
+
+.sidebar-pane-label {
+  color: #337ab7;
+  text-decoration: none;
+  display: inline;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.sidebar-pane-label:hover {
+  color: #23527c;
+  text-decoration: underline;
+}
+
+.sidebar-pane-file {
+  display:none !important;
+}
 
 .sidebar-header {
   margin: -10px -20px 10px;
