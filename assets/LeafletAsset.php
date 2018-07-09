@@ -2,29 +2,36 @@
 
 namespace app\assets;
 
+
 use yii\web\AssetBundle;
 
 /**
- * Class LeaflsetAssets
+ * Class LeafletAsset
  *
- * Asset bundle from vendor for Leaflet widget
+ * Asset bundle for Leaflet widget
  * @see \app\widgets\Leaflet
  * @package app\assets
  */
 class LeafletAsset extends AssetBundle
 {
-    public $sourcePath = '@bower';
-
-    public $css = [
-        'leaflet/dist/leaflet.css',
-        'leaflet.draw/dist/leaflet.draw.css',
-        'leaflet.locatecontrol/dist/L.Control.Locate.css',
-    ];
+    public $basePath = '@webroot';
+    public $baseUrl = '@web';
 
     public $js = [
-        'leaflet/dist/leaflet.js',
-        'leaflet.draw/dist/leaflet.draw.js',
-        'leaflet.locatecontrol/dist/L.Control.Locate.min.js',
+        'js/leaflet-sidebar.min.js',
+        'js/tokml.min.js',
+        'js/togpx.min.js',
+        'js/uleaflet.min.js',
+        'js/togeojson.js',
     ];
 
+    public $css = [
+        'css/leaflet-sidebar.min.css',
+    ];
+
+    public $depends = [
+        'app\assets\VLeafletAsset',
+        'app\assets\VLeafletDrawAsset',
+        'app\assets\VLeafletLocateControlAsset',
+    ];
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace app\widgets;
-use app\assets\ULeafletAsset;
+use app\assets\LeafletAsset;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -27,7 +27,7 @@ class Leaflet extends Widget
     {
         parent::init();
         $view = $this->getView();
-        ULeafletAsset::register($view);
+        LeafletAsset::register($view);
         $this->initJs($view);
     }
 
