@@ -65,6 +65,6 @@ class Leaflet extends Widget
     {
         $options = $this->getOptions();
 
-        $view->registerJs("u_init($options);");
+        $view->registerJs("leaflet($options);");
     }
 }
