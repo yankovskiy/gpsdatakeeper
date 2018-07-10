@@ -101,6 +101,7 @@ function leaflet(options) {
                 const geoJson = fileExtension === 'gpx' ? toGeoJSON.gpx(data) : toGeoJSON.kml(data);
 
                 drawDataOnMap(geoJson);
+                map.fitBounds(drawnItems.getBounds());
             };
 
             reader.readAsText(file);
