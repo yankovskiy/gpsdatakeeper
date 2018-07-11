@@ -7,7 +7,7 @@
  3. Rename config/db-sample.php to config/db.php.
  4. Rename config/keys-sample.php to config/keys.php.
  5. Mofidy renamed files for your server.
- 6. Modify config/params.php
+ 6. Modify config/params.php.
  7. Install depends packages via composer. Run `composer install` in your shell.
  8. Configure your web server and mysql.
  9. Import into your mysql sql/init.sql.
