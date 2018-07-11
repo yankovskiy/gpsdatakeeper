@@ -136,13 +136,13 @@ function leaflet(options) {
      * @param {Object} layer layer for get data
      * @returns {*} string for supported layer or null for unsupported layer
      */
-    function getPopupContent (layer) {
+    function getPopupContent(layer) {
         /**
          * Formats latLng object to string (x.xxxxxx, y.yyyyyy)
          * @param {Object} latlng
          * @returns {string} formated string
          */
-        function strLatLng (latlng) {
+        function strLatLng(latlng) {
             /**
              * Truncates value based on number of decimals
              * @param {number} num value for truncate
@@ -203,23 +203,34 @@ function leaflet(options) {
 
         const osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         const osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-        const osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
+        const osm = L.tileLayer(osmUrl, {maxZoom: 19, attribution: osmAttrib});
 
         map = new L.Map('map', {center: localOptions.mapCenter, zoom: localOptions.mapZoom, zoomControl: false});
         drawnItems.addTo(map);
 
         // comment line when activate other layers
         osm.addTo(map);
-        var mapLayer = {};
+        var mapLayer = {
+            OpenStreetMap: osm.addTo(map),
+            OpenTopoMap: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                maxZoom: 17,
+                attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+            }),
+            Satellite:  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 19,
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            }),
+        };
+
         if (options.mapKeys.thunderforest !== '') {
-            mapLayer['OpenStreetMap'] = osm.addTo(map);
             mapLayer['OpenCycleMap'] = L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + options.mapKeys.thunderforest, {
-                    attribution: '&copy; <a href="https://www.thunderforest.com">Thunderforest</a>'
-                });
+                maxZoom: 22,
+                attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            });
             mapLayer['Outdoor'] = L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=' + options.mapKeys.thunderforest, {
-                    attribution: '&copy; <a href="https://www.thunderforest.com">Thunderforest</a>'
-                });
-            }
+                maxZoom: 22,
+                attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            });
         }
 
         L.control.layers(
@@ -469,6 +480,7 @@ function leaflet(options) {
 
         return drawnItems.toGeoJSON();
     }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     init(options);
 }
