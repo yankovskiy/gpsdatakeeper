@@ -245,6 +245,8 @@ function leaflet(options) {
                 collapsed: false
             }).addTo(map);
 
+        L.control.scale({position: 'bottomright'}).addTo(map);
+
         map.on(L.Draw.Event.CREATED, function (event) {
             const layer = event.layer;
 
