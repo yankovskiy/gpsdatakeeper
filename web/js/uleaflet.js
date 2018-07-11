@@ -210,21 +210,20 @@ function leaflet(options) {
 
         // comment line when activate other layers
         osm.addTo(map);
+        var mapLayer = {};
+        if (options.mapKeys.thunderforest !== '') {
+            mapLayer['OpenStreetMap'] = osm.addTo(map);
+            mapLayer['OpenCycleMap'] = L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + options.mapKeys.thunderforest, {
+                    attribution: '&copy; <a href="https://www.thunderforest.com">Thunderforest</a>'
+                });
+            mapLayer['Outdoor'] = L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=' + options.mapKeys.thunderforest, {
+                    attribution: '&copy; <a href="https://www.thunderforest.com">Thunderforest</a>'
+                });
+            }
+        }
 
         L.control.layers(
-            // base layers, uncomment for activates
-            {
-                // 'OpenStreetMap': osm.addTo(map),
-                // 'OpenCycleMap': L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
-                //     attribution: '&copy; <a href="https://www.thunderforest.com">Thunderforest</a>'
-                // }),
-                // 'Outdoor': L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png', {
-                //     attribution: '&copy; <a href="https://www.thunderforest.com">Thunderforest</a>'
-                // }),
-                // "Google (Satellite)": L.tileLayer('https://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
-                //     attribution: 'google'
-                // }),
-            },
+            mapLayer,
             // overlays
             {
                 'Show drawing': drawnItems

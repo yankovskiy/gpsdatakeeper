@@ -54,6 +54,7 @@ class Leaflet extends Widget
         foreach ($this->options as $key => $option) {
             $options[$key] = $option;
         }
+        $options['mapKeys'] = \Yii::$app->params['mapKeys'];
         return empty($options) ? '{}' : Json::encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
     }
 
