@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  */
 class VLeafletDrawAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/leaflet.draw/dist';
+    public $sourcePath = '@npm/leaflet-draw/dist';
 
     public $css = [
         'leaflet.draw.css',

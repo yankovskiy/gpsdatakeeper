@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  */
 class VLeafletLocateControlAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/leaflet.locatecontrol/dist';
+    public $sourcePath = '@npm/leaflet.locatecontrol/dist';
 
     public $css = [
         'L.Control.Locate.css',

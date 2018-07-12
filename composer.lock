@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5dc7e2a111c9775c5530c988f1c8090a",
+    "content-hash": "1d75475ecb3da40e1bb5789870829004",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -105,66 +105,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/77d2a51d0520d2ee44173afdf4e40a9201f5964e",
                 "reference": "77d2a51d0520d2ee44173afdf4e40a9201f5964e",
-                "shasum": null
-            },
-            "type": "bower-asset",
-            "license": [
-                "MIT"
-            ]
-        },
-        {
-            "name": "bower-asset/leaflet",
-            "version": "v1.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Leaflet/Leaflet.git",
-                "reference": "ba6f97fff8647e724e4dfe66d2ed7da11f908989"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Leaflet/Leaflet/zipball/ba6f97fff8647e724e4dfe66d2ed7da11f908989",
-                "reference": "ba6f97fff8647e724e4dfe66d2ed7da11f908989",
-                "shasum": null
-            },
-            "type": "bower-asset",
-            "license": [
-                "BSD-2-Clause"
-            ]
-        },
-        {
-            "name": "bower-asset/leaflet.draw",
-            "version": "v1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Leaflet/Leaflet.draw.git",
-                "reference": "59f658a2f5bbe1232ac85dc50c475f8acc5cb9e7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Leaflet/Leaflet.draw/zipball/59f658a2f5bbe1232ac85dc50c475f8acc5cb9e7",
-                "reference": "59f658a2f5bbe1232ac85dc50c475f8acc5cb9e7",
-                "shasum": null
-            },
-            "require": {
-                "bower-asset/leaflet": ">=0.7.0"
-            },
-            "type": "bower-asset",
-            "license": [
-                "MIT"
-            ]
-        },
-        {
-            "name": "bower-asset/leaflet.locatecontrol",
-            "version": "v0.62.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/domoritz/leaflet-locatecontrol.git",
-                "reference": "c21238378c277e20fedb2ac39b87cf47450db3d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/domoritz/leaflet-locatecontrol/zipball/c21238378c277e20fedb2ac39b87cf47450db3d4",
-                "reference": "c21238378c277e20fedb2ac39b87cf47450db3d4",
                 "shasum": null
             },
             "type": "bower-asset",
@@ -647,6 +587,20 @@
             ]
         },
         {
+            "name": "npm-asset/leaflet-draw",
+            "version": "1.0.2",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/leaflet-draw/-/leaflet-draw-1.0.2.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
             "name": "npm-asset/leaflet-easybutton",
             "version": "2.3.0",
             "dist": {
@@ -657,6 +611,20 @@
             },
             "require": {
                 "npm-asset/leaflet": ">=1.0.1,<2.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/leaflet.locatecontrol",
+            "version": "0.62.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/leaflet.locatecontrol/-/leaflet.locatecontrol-0.62.0.tgz",
+                "reference": null,
+                "shasum": null
             },
             "type": "npm-asset",
             "license": [
