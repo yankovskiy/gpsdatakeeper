@@ -22,7 +22,8 @@
         "bower-asset/leaflet.draw": "^1.0",
         "loveorigami/yii2-modal-ajax": "@dev",
         "dmstr/yii2-adminlte-asset": "^2.1",
-        "bower-asset/leaflet.locatecontrol": "^0.62.0"
+        "bower-asset/leaflet.locatecontrol": "^0.62.0",
+        "npm-asset/leaflet-easybutton": "^2.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

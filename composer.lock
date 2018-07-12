@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "096995cc0c7229cfccdffa4a1b027d1a",
+    "content-hash": "5dc7e2a111c9775c5530c988f1c8090a",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -631,6 +631,37 @@
                 "yii2"
             ],
             "time": "2018-04-24T11:05:47+00:00"
+        },
+        {
+            "name": "npm-asset/leaflet",
+            "version": "1.3.1",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/leaflet/-/leaflet-1.3.1.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "npm-asset",
+            "license": [
+                "BSD-2-Clause"
+            ]
+        },
+        {
+            "name": "npm-asset/leaflet-easybutton",
+            "version": "2.3.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/leaflet-easybutton/-/leaflet-easybutton-2.3.0.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "npm-asset/leaflet": ">=1.0.1,<2.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "rmrevin/yii2-fontawesome",
