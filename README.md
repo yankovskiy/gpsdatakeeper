@@ -27,8 +27,8 @@
  - improve UI/UX;
  - downalod GPS data from user profile;
  - ~~my location button;~~
- - google maps;
- - thunderforest maps;
+ - ~~google maps;~~ (replaced to esri map) 
+ - ~~thunderforest maps;~~
  - ~~upload gpx;~~
  - ~~upload kml.~~
 
