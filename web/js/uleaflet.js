@@ -3,6 +3,11 @@
  * Utils for map interaction
  */
 function leaflet(options) {
+    const MAP_ACTIONS_BUTTONS = {
+        open: undefined,
+        save: undefined,
+        download: undefined,
+    };
     /**
      * Contains drawing data
      */
@@ -44,18 +49,6 @@ function leaflet(options) {
     var gpsDataTitle = 'My tracks';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     * Sets click listener for "save to server" link
-     * Opens confirmation dialog if geo data present
-     */
-    function saveToServerClickListener() {
-        $('#save-to-server').click(function () {
-            if (hasGeoData()) {
-                $('#save-data-modal').modal('show');
-            }
-        });
-    }
-
     /**
      * Sets onchange listener for "open file" input
      * Opens dialog for choose file and draw it on the map
@@ -102,6 +95,9 @@ function leaflet(options) {
 
                 drawDataOnMap(geoJson);
                 map.fitBounds(drawnItems.getBounds());
+
+                MAP_ACTIONS_BUTTONS.download.enable();
+                MAP_ACTIONS_BUTTONS.save.enable();
             };
 
             reader.readAsText(file);
@@ -176,6 +172,47 @@ function leaflet(options) {
     }
 
     /**
+     * Creates buttons for action with map data
+     */
+    function createMapActionsButtons() {
+        const openFileButton = L.easyButton({
+            states: [{
+                icon: 'fa-upload',
+                title: 'Open drawn data from local file (GPX, KML)',
+                onClick: function () {
+                    $('#open-file').click();
+                }
+            }],
+        });
+
+        const saveGpsButton = L.easyButton({
+            states: [{
+                icon: 'fa-save',
+                title: 'Save your drawn data to server',
+                onClick: function () {
+                    if (hasGeoData()) {
+                        $('#save-data-modal').modal('show');
+                    }
+                },
+            }],
+        }).disable();
+
+        const downloadGpsData = L.easyButton({
+            states: [{
+                icon: 'fa-download',
+                title: 'Download drawn data to local file',
+                onClick: function () {
+                    $('#download-data-modal').modal('show');
+                },
+            }],
+        }).disable();
+
+        MAP_ACTIONS_BUTTONS.save = saveGpsButton;
+        MAP_ACTIONS_BUTTONS.download = downloadGpsData;
+        MAP_ACTIONS_BUTTONS.open = openFileButton;
+    }
+
+    /**
      * Inits map and control elements
      * @param {Object} options for init map
      * @see defaultInitOptions
@@ -216,7 +253,7 @@ function leaflet(options) {
                 maxZoom: 17,
                 attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
             }),
-            Satellite:  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            Satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                 maxZoom: 19,
                 attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
             }),
@@ -247,7 +284,19 @@ function leaflet(options) {
 
         L.control.scale({position: 'bottomright'}).addTo(map);
 
+        createMapActionsButtons();
+
+        map.on(L.Draw.Event.DELETED, function () {
+            if (!hasGeoData()) {
+                MAP_ACTIONS_BUTTONS.download.disable();
+                MAP_ACTIONS_BUTTONS.save.disable();
+            }
+        });
+
         map.on(L.Draw.Event.CREATED, function (event) {
+            MAP_ACTIONS_BUTTONS.download.enable();
+            MAP_ACTIONS_BUTTONS.save.enable();
+
             const layer = event.layer;
 
             drawnItems.addLayer(layer);
@@ -277,31 +326,43 @@ function leaflet(options) {
             drawDataOnMap(geoData);
 
             if (isGuest) {
-                hideSaveDataLink();
+                MAP_ACTIONS_BUTTONS.save.disable();
+                MAP_ACTIONS_BUTTONS.open.disable();
+            } else {
+                MAP_ACTIONS_BUTTONS.save.enable();
+                MAP_ACTIONS_BUTTONS.open.enable();
             }
+
+            MAP_ACTIONS_BUTTONS.download.enable();
 
             // if guest or not gps-data owner
             if (isGuest || (localOptions.isOwner !== undefined && !localOptions.isOwner)) {
                 isAllowEdit = false;
             }
 
+            gpsDataTitle = localOptions.gpsDataTitle;
         }
 
         if (isAllowEdit) {
             map.addControl(drawControl);
 
             gpsDataTitle = localOptions.gpsDataTitle;
-            gpsDataToken = localOptions.gpsDataToken;
-
         }
 
         L.control.sidebar('sidebar').addTo(map);
 
         L.control.locate({
             position: 'topright',
-            icon: 'glyphicon glyphicon-globe',
-            iconLoading: 'glyphicon glyphicon-refresh'
+            icon: 'fa fa-location-arrow'
         }).addTo(map);
+
+        L.easyBar([
+                MAP_ACTIONS_BUTTONS.save,
+                MAP_ACTIONS_BUTTONS.open,
+                MAP_ACTIONS_BUTTONS.download,
+            ],
+            {position: 'topright'}
+        ).addTo(map);
 
         setEventsListeners();
     }
@@ -315,26 +376,47 @@ function leaflet(options) {
     }
 
     /**
-     * Hides link for save data to the server
-     */
-    function hideSaveDataLink() {
-        $('.save-block').remove();
-    }
-
-    /**
      * Sets events listeners
      */
     function setEventsListeners() {
-        // handle #download-kml click
-        handleDownload('kml');
-        // handle #download-gpx click
-        handleDownload('gpx');
-        // handle #save-to-server click
-        saveToServerClickListener();
-        //
+        // handleDownload('kml');
+        // handleDownload('gpx');
         handleSaveDataModal();
-        //
+        handleDownloadDataModal();
         openFileChangeListener();
+    }
+
+    /**
+     * Handles behaviors for Download Data modal
+     */
+    function handleDownloadDataModal() {
+        $('#download-button').click(function () {
+            let fileName = $('#download-file-name').val();
+            const fileFormat = $('#download-file-format').val().toLowerCase();
+            if (!fileName.trim()) {
+                fileName = 'data';
+            }
+
+            let data = getGeoData();
+            if (fileFormat === 'kml') {
+                data = tokml(data);
+            } else if (fileFormat === 'gpx') {
+                data = togpx(data);
+            }
+
+            const convertedData = 'application/xml;charset=utf-8,' + encodeURIComponent(data);
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:' + convertedData);
+            element.setAttribute('download', fileName + '.' + fileFormat);
+            element.style.display = 'none';
+            element.click();
+
+            $('#download-data-modal').modal('hide');
+        });
+
+        $('#download-data-modal').on('show.bs.modal', function (e) {
+            $('#download-file-name').val(gpsDataTitle);
+        });
     }
 
     /**
@@ -398,13 +480,20 @@ function leaflet(options) {
                     } else if (data.status === 'success') {
                         if (data.isOwner === false) {
                             map.removeControl(drawControl);
+                            MAP_ACTIONS_BUTTONS.open.disable();
                         } else {
-                            map.addControl(drawControl);
+                            if (!drawControl._map) {
+                                map.addControl(drawControl);
+                            }
+                            MAP_ACTIONS_BUTTONS.open.enable();
                         }
 
                         if (data.isGuest) {
-                            hideSaveDataLink();
+                            MAP_ACTIONS_BUTTONS.save.disable();
+                        } else {
+                            MAP_ACTIONS_BUTTONS.save.enable();
                         }
+
                         history.pushState(null, null, data.url);
                         gpsDataToken = data.token;
                         displaySuccessfullyMessage();
@@ -429,46 +518,6 @@ function leaflet(options) {
             $('#save-progress').hide();
             $('#save-error').hide();
         })
-    }
-
-    /**
-     * Handle click on the '#download-$format' links.
-     * Runs download process for gps data from map.
-     * If map does not contains gps data function was break.
-     * If map does contains gps data - data converts into specified format and starts download process
-     * @param {String} format file format for download data. Must be 'kml' or 'gpx'
-     */
-    function handleDownload(format) {
-        var element = 'download-';
-
-        if (format === 'kml') {
-            element += 'kml';
-        } else if (format === 'gpx') {
-            element += 'gpx';
-        } else {
-            // unsupported format
-            console.error("Unsupported format");
-            return;
-        }
-
-        const download = document.getElementById(element);
-        download.onclick = function (e) {
-            var data = getGeoData();
-            if (data === null) {
-                return;
-            }
-
-            console.log(JSON.stringify(data));
-            if (format === 'kml') {
-                data = tokml(data);
-            } else if (format === 'gpx') {
-                data = togpx(data);
-            }
-
-            const convertedData = 'application/xml;charset=utf-8,' + encodeURIComponent(data);
-            download.setAttribute('href', 'data:' + convertedData);
-            download.setAttribute('download', 'data.' + format);
-        }
     }
 
     /**

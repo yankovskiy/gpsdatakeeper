@@ -33,5 +33,6 @@ class LeafletAsset extends AssetBundle
         'app\assets\VLeafletAsset',
         'app\assets\VLeafletDrawAsset',
         'app\assets\VLeafletLocateControlAsset',
+        'app\assets\VLeafletEasyButtonAsset',
     ];
 }

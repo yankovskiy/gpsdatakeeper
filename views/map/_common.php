@@ -10,7 +10,6 @@ $this->title = Yii::$app->name;
     <div class="sidebar-tabs">
         <ul role="tablist">
             <li><a href="#home" role="tab"><i class="glyphicon glyphicon-menu-hamburger"></i></a></li>
-            <li><a href="#actions" role="tab"><i class="glyphicon glyphicon-folder-open"></i></a></li>
         </ul>
 
         <ul role="tablist">
@@ -32,40 +31,6 @@ $this->title = Yii::$app->name;
                 their work with friends.
             </p>
 
-        </div>
-
-        <div class="sidebar-pane" id="actions">
-            <h1 class="sidebar-header">Map actions<span class="sidebar-close"><i class="glyphicon glyphicon-menu-left"></i></span></h1>
-            <p>
-                <a href="#" id="download-gpx">Download GPX</a><br>
-                <small>
-                    Download GPX-file for future use in many navigators and programs.
-                </small>
-            </p>
-
-            <p>
-                <a href="#" id="download-kml">Download KML</a><br>
-                <small>
-                    Download KML-file for future use in such programs as
-                    Google Earth, Google Maps, and Google Maps for mobile devices.
-                </small>
-            </p>
-
-            <p>
-                <label for="open-file" class="sidebar-pane-label">Open file</label><br>
-                <input type="file" accept=".gpx,.kml" id="open-file" name="file" class="sidebar-pane-file">
-                <small>
-                    Open your gps-data for view on the map. Supported GPX and KML formats.
-                </small>
-            </p>
-
-            <p class="save-block">
-                <a href="#" id="save-to-server">Save to server</a><br>
-                <small>
-                    Save the map on the server to share it with a friend or continue working on it in
-                    further.
-                </small>
-            </p>
         </div>
 
         <div class="sidebar-pane" id="account">
@@ -109,9 +74,10 @@ $this->title = Yii::$app->name;
             <?= \app\widgets\Faq::widget() ?>
         </div>
     </div>
+    <input type="file" accept=".gpx,.kml" id="open-file" name="file" class="sidebar-pane-file">
 </div>
-
 <?= $this->render('_save-data-modal') ?>
+<?= $this->render('_download-data-modal') ?>
 
 <?= \lo\widgets\modal\ModalAjax::widget([
     'id' => 'accountActions',
