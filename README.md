@@ -24,7 +24,7 @@
 
 **08/18**  - 0.2.0
 
- - improve UI/UX;
+ - ~~improve UI/UX;~~
  - downalod GPS data from user profile;
  - ~~my location button;~~
  - ~~google maps;~~ (replaced to esri map) 
