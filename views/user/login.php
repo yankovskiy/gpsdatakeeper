@@ -7,18 +7,15 @@ use app\widgets\Alert;
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\LoginForm */
-/* @var $isAjax bool */
 
 $this->title = 'Sign In';
 
 ?>
 
 <div class="login-box">
-    <?php if (!$isAjax): ?>
-        <div class="login-logo">
-            <?= Html::a(Yii::$app->name, '/') ?>
-        </div>
-    <?php endif; ?>
+    <div class="login-logo">
+        <?= Html::a(Yii::$app->name, '/') ?>
+    </div>
 
     <div class="login-box-body">
         <?= Alert::widget(['alertTypes' => ['success' => 'alert-success-old']]) ?>
@@ -56,10 +53,8 @@ $this->title = 'Sign In';
         <?php ActiveForm::end(); ?>
 
 
-        <?php if (!$isAjax): ?>
-            <a href="request-password-reset">I forgot my password</a><br>
-            <a href="signup" class="text-center">Register a new membership</a>
-        <?php endif; ?>
+        <a href="request-password-reset">I forgot my password</a><br>
+        <a href="signup" class="text-center">Register a new membership</a>
     </div>
 
 </div>

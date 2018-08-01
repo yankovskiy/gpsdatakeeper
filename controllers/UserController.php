@@ -75,7 +75,6 @@ class UserController extends \yii\web\Controller
 
         return $this->render('login', [
             'model' => $model,
-            'isAjax' => Yii::$app->request->isAjax,
         ]);
     }
 
@@ -110,7 +109,6 @@ class UserController extends \yii\web\Controller
         $this->layout = 'backend-empty';
         return $this->render('signup', [
             'model' => $model,
-            'isAjax' => Yii::$app->request->isAjax,
         ]);
     }
 
@@ -133,7 +131,6 @@ class UserController extends \yii\web\Controller
         $this->layout = 'backend-empty';
         return $this->render('request-password-reset', [
             'model' => $model,
-            'isAjax' => Yii::$app->request->isAjax,
         ]);
     }
 

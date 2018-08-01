@@ -5,19 +5,15 @@
 
 /* @var $model \app\models\PasswordResetRequestForm */
 
-/* @var $isAjax bool */
-
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\widgets\Alert;
 
 ?>
 <div class="login-box">
-    <?php if (!$isAjax): ?>
-        <div class="login-logo">
-            <?= Html::a(Yii::$app->name, '/') ?>
-        </div>
-    <?php endif; ?>
+    <div class="login-logo">
+        <?= Html::a(Yii::$app->name, '/') ?>
+    </div>
 
     <div class="login-box-body">
         <?php if (Yii::$app->session->hasFlash('success') || Yii::$app->session->getFlash('error')): ?>
