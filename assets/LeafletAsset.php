@@ -30,6 +30,7 @@ class LeafletAsset extends AssetBundle
     ];
 
     public $depends = [
+        'yii\bootstrap\BootstrapPluginAsset',
         'app\assets\VLeafletAsset',
         'app\assets\VLeafletDrawAsset',
         'app\assets\VLeafletLocateControlAsset',
