@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\ChangePasswordForm;
+use app\models\DownloadGspsDataForm;
 use app\models\GpsData;
 use app\models\GpsDataSearch;
 use app\models\LoginForm;
@@ -14,6 +15,7 @@ use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -132,6 +134,32 @@ class UserController extends \yii\web\Controller
         return $this->render('request-password-reset', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Shows dialog for download gps data
+     * @param string $token data token
+     */
+    public function actionDownloadGpsData($token)
+    {
+        // todo отображение диалога для скачивания данных
+        if (Yii::$app->request->isAjax) {
+            $model = new DownloadGspsDataForm();
+            $data = GpsData::getDataByToken($token, true);
+            if (isset($data)) {
+                if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ['data' => $data->data, 'fileName' => $model->fileName, 'format' => mb_strtolower($model->format)];
+                }
+
+                $model->fileName = $data->title;
+                $model->format = 'GPX';
+
+                return $this->renderAjax('download-gps-data', [
+                    'model' => $model,
+                ]);
+            }
+        }
     }
 
     /**
