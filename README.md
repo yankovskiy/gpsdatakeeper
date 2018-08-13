@@ -22,21 +22,14 @@
 
 ~~**07/18** - 0.1.0~~
 
-**08/18**  - 0.2.0
-
- - ~~improve UI/UX;~~
- - downalod GPS data from user profile;
- - ~~my location button;~~
- - ~~google maps;~~ (replaced to esri map) 
- - ~~thunderforest maps;~~
- - ~~upload gpx;~~
- - ~~upload kml.~~
+~~**08/18**  - 0.2.0~~
 
 **10/18** - 0.3.0
 
  - auth via google;
  - google drive support;
- - russian locale;
+ - choose color for track and marker;
+ - set name for track and marker;
  - geo calculators.
 
 ## Our service online
