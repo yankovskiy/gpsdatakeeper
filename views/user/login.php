@@ -7,7 +7,7 @@ use app\widgets\Alert;
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\LoginForm */
-// auth url: https://gpsdatakeeper-loc.org/user/auth?authclient=google
+
 $this->title = 'Sign In';
 
 ?>
@@ -19,7 +19,6 @@ $this->title = 'Sign In';
     </div>
 
     <div class="login-box-body">
-        <?= Alert::widget(['alertTypes' => ['success' => 'alert-success-old']]) ?>
         <p class="login-box-msg">Sign in to start your session</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>

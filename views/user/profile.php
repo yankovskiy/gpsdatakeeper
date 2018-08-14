@@ -5,9 +5,10 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use app\widgets\Alert;
+
 
 $this->title = 'Profile'; ?>
+
 <div class="row">
     <div class="col-md-5">
         <div class="box box-primary">
@@ -17,7 +18,7 @@ $this->title = 'Profile'; ?>
 
             <?php $form = ActiveForm::begin(['id' => 'change-password-form', 'enableClientValidation' => false]); ?>
             <div class="box-body">
-                <?= Alert::widget() ?>
+
                 <?= $form
                     ->field($model, 'password', [
                         'options' => ['class' => 'form-group has-feedback'],
