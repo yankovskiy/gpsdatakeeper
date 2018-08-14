@@ -114,11 +114,19 @@ class AuthHandler
                 }
 
             } else { // there's existing auth
-                Yii::$app->getSession()->setFlash('error', [
-                    Yii::t('app',
-                        'Unable to link {client} account. There is another user using it.',
-                        ['client' => $this->client->getTitle()]),
-                ]);
+                if ($auth->user_id == Yii::$app->user->id) {
+                    Yii::$app->getSession()->setFlash('success', [
+                        Yii::t('app', 'Linked {client} account.', [
+                            'client' => $this->client->getTitle()
+                        ]),
+                    ]);
+                } else {
+                    Yii::$app->getSession()->setFlash('error', [
+                        Yii::t('app',
+                            'Unable to link {client} account. There is another user using it.',
+                            ['client' => $this->client->getTitle()]),
+                    ]);
+                }
 
             }
 
