@@ -52,7 +52,12 @@ use yii\bootstrap\ActiveForm;
 
         <?php ActiveForm::end(); ?>
 
-        <br><a href="login">I already have a membership</a>
+        <div class="social-auth-links text-center">
+            <p>- OR -</p>
+            <?= Html::a('<i class="fa fa-google-plus"></i> Sign up using Google+', ['user/auth', 'authclient' => 'google'], ['class' => 'btn btn-block btn-social btn-google btn-flat']) ?>
+        </div>
+
+        <a href="login">I already have a membership</a>
     </div>
     <!-- /.form-box -->
 </div>

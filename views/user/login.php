@@ -7,10 +7,11 @@ use app\widgets\Alert;
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\LoginForm */
-
+// auth url: https://gpsdatakeeper-loc.org/user/auth?authclient=google
 $this->title = 'Sign In';
 
 ?>
+<?= \dmstr\widgets\Alert::widget() ?>
 
 <div class="login-box">
     <div class="login-logo">
@@ -49,9 +50,12 @@ $this->title = 'Sign In';
             </div>
         </div>
 
-
         <?php ActiveForm::end(); ?>
 
+        <div class="social-auth-links text-center">
+            <p>- OR -</p>
+            <?= Html::a('<i class="fa fa-google-plus"></i> Sign in using Google+', ['user/auth', 'authclient' => 'google'], ['class' => 'btn btn-block btn-social btn-google btn-flat']) ?>
+        </div>
 
         <a href="request-password-reset">I forgot my password</a><br>
         <a href="signup" class="text-center">Register a new membership</a>

@@ -56,6 +56,16 @@ $config = [
             'class' => 'app\components\GoogleTagManager',
             'tagManagerId' => null, // put your GoogleTag if need. Example: 'GTM-1234567',
         ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'google' => [
+                    'class' => 'yii\authclient\clients\Google',
+                    'clientId' => 'google_client_id',   // put your info
+                    'clientSecret' => 'google_client_secret',   // put your info
+                ],
+            ],
+        ],
     ],
     'params' => $params,
     'defaultRoute' => 'map/index',

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AuthHandler;
 use app\models\ChangePasswordForm;
 use app\models\DownloadGspsDataForm;
 use app\models\GpsData;
@@ -15,7 +16,6 @@ use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
-use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -24,6 +24,31 @@ use yii\web\Response;
  */
 class UserController extends \yii\web\Controller
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function actions()
+    {
+        return [
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
+        ];
+    }
+
+    /**
+     * Called when user successfully authenticated via external service
+     * @param yii\authclient\ClientInterface $client
+     */
+    public function onAuthSuccess($client)
+    {
+        $url = (new AuthHandler($client))->handle();
+        if ($url !== null) {
+            $this->redirect($url);
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
