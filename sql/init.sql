@@ -1,57 +1,12 @@
--- phpMyAdmin SQL Dump
--- version 4.6.6deb4
--- https://www.phpmyadmin.net/
---
--- Host: localhost:3306
--- Generation Time: Jul 03, 2018 at 12:11 PM
--- Server version: 10.1.26-MariaDB-0+deb9u1
--- PHP Version: 7.2.7-1+0~20180622080745.23+stretch~1.gbpfd8e2e
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `gpskeeper`
---
-
---
--- Table structure for table `migration`
---
-
-CREATE TABLE `migration` (
-  `version` varchar(180) NOT NULL,
-  `apply_time` int(11) DEFAULT NULL
+CREATE TABLE `auth` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `source` varchar(255) NOT NULL,
+  `source_id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `migration`
---
-
-INSERT INTO `migration` (`version`, `apply_time`) VALUES
-('m000000_000000_base', 1531051327),
-('m180708_115845_change_data_column', 1531051329);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `migration`
---
-ALTER TABLE `migration`
-  ADD PRIMARY KEY (`version`);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `gpsdata`
---
 
 CREATE TABLE `gpsdata` (
   `token` varchar(32) NOT NULL,
@@ -64,11 +19,15 @@ CREATE TABLE `gpsdata` (
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `user`
---
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1531091631),
+('m180708_115845_change_data_column', 1531091632),
+('m180814_011951_create_auth_table', 1534209651);
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
@@ -82,52 +41,35 @@ CREATE TABLE `user` (
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `user`
---
-
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
 (0, 'Guest', 'n/a', 'n/a', NULL, 'n/a', 0, 0, 0);
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `gpsdata`
---
+ALTER TABLE `auth`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk-auth-user_id-user-id` (`user_id`);
+
 ALTER TABLE `gpsdata`
   ADD PRIMARY KEY (`token`),
   ADD KEY `user_id` (`user_id`);
 
---
--- Indexes for table `user`
---
+ALTER TABLE `migration`
+  ADD PRIMARY KEY (`version`);
+
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `password_reset_token` (`password_reset_token`);
 
---
--- AUTO_INCREMENT for dumped tables
---
 
---
--- AUTO_INCREMENT for table `user`
---
+ALTER TABLE `auth`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
---
--- Constraints for dumped tables
---
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- Constraints for table `gpsdata`
---
+ALTER TABLE `auth`
+  ADD CONSTRAINT `fk-auth-user_id-user-id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 ALTER TABLE `gpsdata`
   ADD CONSTRAINT `gpsdata_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
