@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\AuthHandler;
+use app\models\Auth;
 use app\models\ChangePasswordForm;
 use app\models\DownloadGspsDataForm;
 use app\models\GpsData;
@@ -65,7 +66,7 @@ class UserController extends \yii\web\Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index', 'profile', 'delete-gps-data'],
+                        'actions' => ['logout', 'index', 'profile', 'delete-gps-data', 'unlink'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -76,6 +77,7 @@ class UserController extends \yii\web\Controller
                 'actions' => [
                     'logout' => ['post'],
                     'delete-gps-data' => ['post'],
+                    'unlink' => ['post'],
                 ],
             ],
         ];
@@ -270,6 +272,27 @@ class UserController extends \yii\web\Controller
         }
 
         $model->password = '';
-        return $this->render('profile', ['model' => $model]);
+        $googleAuth = Auth::findOne(['user_id' => Yii::$app->user->id, 'source' => 'google']);
+
+        return $this->render('profile', ['model' => $model, 'googleAuth' => $googleAuth]);
+    }
+
+    /**
+     * Removes link to social network account
+     * After remove or fail redirect to profile and display status message
+     * @param $id int id link for remove
+     */
+    public function actionUnlink($id)
+    {
+        $auth = Auth::findOne(['id' => $id, 'user_id' => Yii::$app->user->id]);
+
+        if (isset($auth)) {
+            $auth->delete();
+            Yii::$app->session->setFlash('success', 'Unlink account successfully');
+        } else {
+            Yii::$app->session->setFlash('error', 'Link could not be found');
+        }
+
+        $this->redirect('profile');
     }
 }
