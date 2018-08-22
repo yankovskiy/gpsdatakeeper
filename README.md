@@ -26,7 +26,7 @@
 
 **10/18** - 0.3.0
 
- - auth via google;
+~~- auth via google;~~
  - google drive support;
  - choose color for track and marker;
  - set name for track and marker;

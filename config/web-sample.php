@@ -63,6 +63,7 @@ $config = [
                     'class' => 'yii\authclient\clients\Google',
                     'clientId' => 'google_client_id',   // put your info
                     'clientSecret' => 'google_client_secret',   // put your info
+                    //'returnUrl' => 'https://YOUR-URL/user/auth?authclient=google' // put your info, optional
                 ],
             ],
         ],
